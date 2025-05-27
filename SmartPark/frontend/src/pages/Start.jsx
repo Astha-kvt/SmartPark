@@ -37,8 +37,7 @@ const Start = () => {
             <span className="font-bold">SmartPark</span> is an intelligent parking management system that helps you find and manage parking spaces in real-time.
             With our user-friendly interface, you can easily locate available parking spots and get guided to your destination.
             No more circling around looking for parking — stay informed and plan your parking with confidence!
-            Whether you're a regular parker or a visitor, SmartPark ensures a smooth and efficient parking experience.
-            Join us today and transform the way you park!
+            Whether you're a regular parker or a visitor, SmartPark ensures a smooth and efficient parking experience!
           </p>
         </div>
       </div>
