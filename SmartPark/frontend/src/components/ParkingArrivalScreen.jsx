@@ -2,10 +2,47 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function ParkingArrivalScreen() {
-  const [showPath, setShowPath] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const navigate = useNavigate();
-  const assignedSlot = 'B-7';
+  
+  // Parking data with walking order
+  const sections = [
+    { 
+      name: 'A', 
+      spots: 8, 
+      color: 'bg-blue-100',
+      walkingOrder: [1, 2, 3, 4, 5, 6, 7, 8]
+    },
+    { 
+      name: 'B', 
+      spots: 8, 
+      color: 'bg-purple-100',
+      walkingOrder: [1, 2, 3, 4, 5, 6, 7, 8]
+    },
+    { 
+      name: 'C', 
+      spots: 8, 
+      color: 'bg-teal-100',
+      walkingOrder: [1, 2, 3, 4, 5, 6, 7, 8]
+    }
+  ];
+
+  const occupiedSpots = ['A-1', 'A-2', 'B-1', 'B-2', 'B-3', 'C-1'];
+  
+  // Auto-assign closest available slot
+  const assignClosestSlot = () => {
+    for (const section of sections) {
+      for (const spotNum of section.walkingOrder) {
+        const spotId = `${section.name}-${spotNum}`;
+        if (!occupiedSpots.includes(spotId)) {
+          return spotId;
+        }
+      }
+    }
+    return null;
+  };
+
+  const assignedSlot = assignClosestSlot();
   const captainDetails = {
     name: 'Captain Rahul Gupta',
     phone: '+91 987*5 *****',
@@ -13,17 +50,6 @@ export default function ParkingArrivalScreen() {
     rating: '4.8 ★',
     status: 'On Duty'
   };
-
-  const sections = [
-    { name: 'A', spots: 8, color: 'bg-blue-100' },
-    { name: 'B', spots: 9, color: 'bg-purple-100' },
-    { name: 'C', spots: 8, color: 'bg-teal-100' }
-  ];
-
-  useEffect(() => {
-    const timer = setTimeout(() => setShowPath(true), 500);
-    return () => clearTimeout(timer);
-  }, []);
 
   const handleDone = () => {
     setShowConfirmation(true);
@@ -87,7 +113,7 @@ export default function ParkingArrivalScreen() {
                       key={spotId}
                       className={`p-1 md:p-2 rounded text-center font-medium relative text-xs md:text-base
                         ${isAssigned ? 
-                          'bg-amber-400 border-2 border-amber-600' :
+                          'bg-yellow-200 border-2 border-yellow-500 font-bold' :
                           'bg-white border border-gray-300'}`}
                     >
                       {spotId}
